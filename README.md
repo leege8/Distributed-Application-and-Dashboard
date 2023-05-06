@@ -1,4 +1,4 @@
-# Distributed-Application-and-Dashboard
+# Distributed Application and Dashboard
 This project contains the following parts:
 1. A Web application deployed to the cloud through codespace. 
 2. The information from a third-party API will be fetched to support user interactions at Android App.
