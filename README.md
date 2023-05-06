@@ -3,6 +3,7 @@ This project contains the following parts:
 1. A Web application deployed to the cloud through codespace. 
 2. The information from a third-party API will be fetched to support user interactions at Android App.
 3. Logging data from the Android App will be stored in the MongoDB and displayed in a dashboard.
+<img src="/application_summary.png" alt="Diagramt" width="500"/>
 
 ## Description:
 My application offers the user three different approaches to fetch an Emoji:
@@ -22,4 +23,5 @@ third Party API called EmojiHub.
 - activity_emoji_three.xml
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Here a screenshot of the layout for main menu (activity_emoji_main.xml)
+
 
