@@ -40,6 +40,48 @@ the Emoji in HTML format. Here is a simple workflow to aid understanding:
 An example of the Json reply is:   
 ![image](https://user-images.githubusercontent.com/124459825/236644692-419dba57-5c33-4925-b6e8-31110d596b75.png)
 
+##### Code Walkthrough
+###### a. Create an URL based on the user input
+searchTag is the user input in below:
+```
+searchTag = URLEncoder.encode(searchTag.replace(" ","-"), "UTF-8");
+String EmojiURL = "";
+if (searchTag.contains("random")) {
+    EmojiURL = "https://emojihub.yurace.pro/api/random";
+} else {
+    // Create a URL (combination of API and userInput) for the page to be screen scraped
+    EmojiURL = "https://emojihub.yurace.pro/api/random/category/" + searchTag;
+}
+```
+###### b. Create an HttpURLConnection using the URL
+```
+URL url = new URL(EmojiURL);
+HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                // Read all the text returned by the server
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+                String str;
+                // Read each line of "in" until done, adding each to "response"
+                while ((str = in.readLine()) != null) {
+                    // str is one line of text readLine() strips newline characters
+                    response += str;
+                }
+                in.close();
+            }
+        } catch (IOException e) {
+            System.out.println("An exception occurred!");
+        }
+```
+###### c. capture search request by calling getParameter
+String search should be consistent with user input in (a)
+```
+ String pathInfo = request.getPathInfo();
+ String search = null;
+ if (pathInfo != null) {
+     search = pathInfo.substring(1).split("/")[0];
+ }
+```
 #### 3. Connect to MongoDB Atlas
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The main MongoDB web site is https://www.mongodb.com. The site provides documentation, a downloadable version of the database manager application (mongod) that you can run on your laptop, and MongoDB drivers for many languages, including Java.  
 Mongod is the MongoDB database server. It listens by default on port 27017. Requests and responses with the database are made via a MongoDB protocol.  
