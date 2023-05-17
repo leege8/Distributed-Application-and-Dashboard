@@ -40,10 +40,10 @@ the Emoji in HTML format. Here is a simple workflow to aid understanding:
 An example of the Json reply is:   
 ![image](https://user-images.githubusercontent.com/124459825/236644692-419dba57-5c33-4925-b6e8-31110d596b75.png)
 
-**Code Walkthrough**
+#### Code Walkthrough
 Below are for demonstration purposes; they are not a complete set of codes. Please refer to WebServer.zip for details.
 
-###### a. Create an URL based on the user input
+##### a. Create an URL based on the user input
 searchTag is the user input in below:
 ```
 searchTag = URLEncoder.encode(searchTag.replace(" ","-"), "UTF-8");
@@ -55,7 +55,7 @@ if (searchTag.contains("random")) {
     EmojiURL = "https://emojihub.yurace.pro/api/random/category/" + searchTag;
 }
 ```
-###### b. Create an HttpURLConnection using the URL
+##### b. Create an HttpURLConnection using the URL
 ```
 URL url = new URL(EmojiURL);
 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -75,7 +75,7 @@ HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             System.out.println("An exception occurred!");
         }
 ```
-###### c. capture search request by calling getParameter
+##### c. capture search request by calling getParameter
 String search should be consistent with user input in (a)
 ```
  String pathInfo = request.getPathInfo();
