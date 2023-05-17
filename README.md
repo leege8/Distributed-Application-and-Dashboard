@@ -40,7 +40,9 @@ the Emoji in HTML format. Here is a simple workflow to aid understanding:
 An example of the Json reply is:   
 ![image](https://user-images.githubusercontent.com/124459825/236644692-419dba57-5c33-4925-b6e8-31110d596b75.png)
 
-##### Code Walkthrough
+**Code Walkthrough**
+Below are for demonstration purposes; they are not a complete set of codes. Please refer to WebServer.zip for details.
+
 ###### a. Create an URL based on the user input
 searchTag is the user input in below:
 ```
