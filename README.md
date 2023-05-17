@@ -115,13 +115,43 @@ This is where the logging information will be stored.
  ```
  private MongoClient ConnectMongoDB() {
         ConnectionString connectionString = new ConnectionString(connectionURL);
-        MongoClientSettings settings =         MongoClientSettings.builder().applyConnectionString(connectionString).serverApi(ServerApi.builder().version(ServerApiVersion.V1).build()).build();
+        MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(connectionString).serverApi(ServerApi.builder().version(ServerApiVersion.V1).build()).build();
         //mongoClient defines the initial connection to the MongoDB server
         MongoClient mongoClient = MongoClients.create(settings);
         return mongoClient;
     }
  ```
  
+ ##### b. Write to MongoDB database
+ ```
+ MongoClient mongoClient = ConnectMongoDB();
+ MongoDatabase database = mongoClient.getDatabase(databaseName);
+ MongoCollection<Document> collection = database.getCollection(collectionName);
+ Document newEmoji = new Document("_id", new ObjectId());
+ newEmoji.append("htmlCode", emoji.getChosenHtmlCode());
+ newEmoji.append("index", index+1);
+ newEmoji.append("name", emoji.getName());
+ newEmoji.append("category", emoji.getCategory());
+ collection.insertOne(newEmoji);
+ ```
+ 
+ ##### c. Read from MongoDB database
+ MongoClient mongoClient = ConnectMongoDB();
+ MongoDatabase database = mongoClient.getDatabase(databaseName);
+ MongoCollection<Document> collection = database.getCollection(collectionName);
+ if (collection.countDocuments() == 0) {
+    System.out.println("There is no document found in collection " + collectionName + " in database " + databaseName);
+ }
+       
+ FindIterable<Document> iterDoc = collection.find(); // invoke find method
+ ArrayList<String> groupList = new ArrayList<>();
+ ArrayList<String> categoryList = new ArrayList<>();
+    
+ for (Document document: iterDoc) {
+      //print out each document or specify the attributes of each document
+ }
+ 
+  
 #### 4. Display Web-based Dashboard
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The dashboard contains analytical statistics regarding user activities:
 - User IP address: to avoid potential security threats; to better identify potential target group of users.
