@@ -32,19 +32,7 @@ Where searchTag is the user’s input:
 - approach 2: typed search term
 - approach 3: searchTag is set to “random”.   
 
-The search method makes this request of my web application, parses the returned Json message to get the hashcode of Emoji and return, display 
-the Emoji in HTML format. Here is a simple workflow to aid understanding:   
-
-<img src="https://user-images.githubusercontent.com/124459825/236644466-5c53a742-f845-48ba-986b-e2823a843801.png" alt="Diagramt" width="600"/>
-
-An example of the Json reply is:   
-![image](https://user-images.githubusercontent.com/124459825/236644692-419dba57-5c33-4925-b6e8-31110d596b75.png)
-
-##### Code Walkthrough
-Below are for demonstration purposes; they are not a complete set of codes. Please refer to WebServer.zip for details.
-
 ##### a. Create an URL based on the user input
-searchTag is the user input in below:
 ```
 searchTag = URLEncoder.encode(searchTag.replace(" ","-"), "UTF-8");
 String EmojiURL = "";
@@ -75,15 +63,36 @@ HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             System.out.println("An exception occurred!");
         }
 ```
-##### c. capture search request by calling getParameter
-String search should be consistent with user input in (a)
+##### c. capture search request by calling getParameter using Java WebServlet doGet() method
 ```
  String pathInfo = request.getPathInfo();
  String search = null;
  if (pathInfo != null) {
+     // search should be consistent with user input
      search = pathInfo.substring(1).split("/")[0];
  }
 ```
+
+The search method makes this request to my web application, and then parses the returned Json message (http response) to capture the hashcode of Emoji and return the Emoji in HTML format. Here is a simple workflow to aid understanding:   
+
+<img src="https://user-images.githubusercontent.com/124459825/236644466-5c53a742-f845-48ba-986b-e2823a843801.png" alt="Diagramt" width="600"/>
+
+An example of the Json reply:   
+![image](https://user-images.githubusercontent.com/124459825/236644692-419dba57-5c33-4925-b6e8-31110d596b75.png)
+
+An example of Emoji in HTML:
+```
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p>&#128512;</p>
+    </body>
+</html>
+```
+
 #### 3. Connect to MongoDB Atlas
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The main MongoDB web site is https://www.mongodb.com. The site provides documentation, a downloadable version of the database manager application (mongod) that you can run on your laptop, and MongoDB drivers for many languages, including Java.  
 Mongod is the MongoDB database server. It listens by default on port 27017. Requests and responses with the database are made via a MongoDB protocol.  
@@ -101,6 +110,17 @@ This is where the logging information will be stored.
  - *Where would you like to connect from?*  
  Choose My Local Environment, add the IP address `0.0.0.0/0`, and Add Entry.
  - Then Finish and Close.
+ 
+ ##### a. Establish connection with MongoDB from Java
+ ```
+ private MongoClient ConnectMongoDB() {
+        ConnectionString connectionString = new ConnectionString(connectionURL);
+        MongoClientSettings settings =         MongoClientSettings.builder().applyConnectionString(connectionString).serverApi(ServerApi.builder().version(ServerApiVersion.V1).build()).build();
+        //mongoClient defines the initial connection to the MongoDB server
+        MongoClient mongoClient = MongoClients.create(settings);
+        return mongoClient;
+    }
+ ```
  
 #### 4. Display Web-based Dashboard
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The dashboard contains analytical statistics regarding user activities:
