@@ -136,6 +136,7 @@ This is where the logging information will be stored.
  ```
  
  ##### c. Read from MongoDB database
+ ```
  MongoClient mongoClient = ConnectMongoDB();
  MongoDatabase database = mongoClient.getDatabase(databaseName);
  MongoCollection<Document> collection = database.getCollection(collectionName);
@@ -150,8 +151,8 @@ This is where the logging information will be stored.
  for (Document document: iterDoc) {
       //print out each document or specify the attributes of each document
  }
+ ```
  
-  
 #### 4. Display Web-based Dashboard
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The dashboard contains analytical statistics regarding user activities:
 - User IP address: to avoid potential security threats; to better identify potential target group of users.
